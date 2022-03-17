@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include "StockBookListModel.h"
 
 class StockBookViewModel : public QObject
 {
@@ -12,6 +13,7 @@ public:
     virtual ~StockBookViewModel();
 
     Q_INVOKABLE void selectRow(int iPos);
+    Q_INVOKABLE StockBookListModel* getListModel() { return &m_stockBookListModel; }
 
     QString getDisplayMsg();
 
@@ -20,6 +22,7 @@ signals:
 
 protected:
     int m_selectedPos = -1;
-
+    StockBookListModel m_stockBookListModel;
+    QList<STOCK_BOOK_ITEM> m_stockBookList;
 };
 

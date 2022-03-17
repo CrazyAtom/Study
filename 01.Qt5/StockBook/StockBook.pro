@@ -1,6 +1,7 @@
 QT += quick
 
 SOURCES += \
+        StockBookListModel.cpp \
         StockBookViewModel.cpp \
         main.cpp
 
@@ -24,6 +25,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    StockBookListModel.h \
     StockBookViewModel.h
 
 DISTFILES += \

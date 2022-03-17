@@ -18,20 +18,6 @@ Item {
         id: myModel
     }
 
-    ListModel {
-        id: addressDataModel
-
-        ListElement { name: "Apple"; market: "2.941 T"; stockPrice: 179.3 }
-        ListElement { name: "Microsoft"; market: "2.512 T"; stockPrice: 334.65 }
-        ListElement { name: "Google"; market: "1.949 T"; stockPrice: 2947 }
-        ListElement { name: "Saudi Aramco"; market: "1.875 T"; stockPrice: 938 }
-        ListElement { name: "Amazon"; market: "1.757 T"; stockPrice: 3466 }
-        ListElement { name: "Tesla"; market: "980.14 B"; stockPrice: 975.99 }
-        ListElement { name: "Meta"; market: "950.41 B"; stockPrice: 341.66 }
-        ListElement { name: "NVIDIA"; market: "759.03 B"; stockPrice: 304.59 }
-        ListElement { name: "TSMC"; market: "624.40 B"; stockPrice: 120.40 }
-    }
-
     Component {
         id: listViewHeader
 
@@ -203,7 +189,7 @@ Item {
             highlight: highlightBar
             header: listViewHeader
             delegate: listViewDelegate
-            model: addressDataModel
+            model: myModel.getListModel();
         }
     }
 }
