@@ -6,6 +6,15 @@
 # Remove it when you are finished editing this file.
 message("You are running qmake on a generated .pro file. This may not work!")
 
+HEADERS += \
+            ./models/sqlcontactmodel.h \
+            ./models/sqlconversationmodel.h
 
-SOURCES += ./main.cpp
-RESOURCES += qml.qrc
+SOURCES += \
+            ./main.cpp \
+            ./models/sqlcontactmodel.cpp \
+            ./models/sqlconversationmodel.cpp
+
+RESOURCES += \
+            ./qml.qrc \
+            ./images.qrc

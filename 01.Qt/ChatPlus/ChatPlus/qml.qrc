@@ -1,5 +1,10 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>resources/qml/main.qml</file>
+        <file>resources/qml/ChatToolbar.qml</file>
+        <file>resources/qml/+Material/ChatToolbar.qml</file>
+        <file>resources/qml/ConversationPage.qml</file>
+        <file>resources/qml/ContactPage.qml</file>
     </qresource>
 </RCC>
