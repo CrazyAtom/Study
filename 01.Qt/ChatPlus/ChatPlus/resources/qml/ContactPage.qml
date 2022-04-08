@@ -4,7 +4,15 @@ import QtQuick.Controls
 import com.crazyatom.chatplus
 
 Page {
-    id: root
+    id: contactPage
+
+    Component.onCompleted: {
+        console.log("contactPage - created")
+    }
+
+    Component.onDestruction: {
+        console.log("contactPage - destroyed")
+    }
 
     header: ChatToolbar {
         ToolButton {
@@ -31,7 +39,13 @@ Page {
             width: listView.width - listView.leftMargin - listView.rightMargin
             height: avatar.height
             leftPadding: avatar.width + 10
-            onClicked: root.StackView.view.push("qrc:/resources/qml/ConversationPage.qml", { inConversationId: model.convid })
+            onClicked: {
+                if (splitState) {
+                    splitView.conversationIdChange(model.convid)
+                } else {
+                    contactPage.StackView.view.push("qrc:/resources/qml/ConversationPage.qml", { inConversationId: model.convid })
+                }
+            }
 
             Image {
                 id: avatar

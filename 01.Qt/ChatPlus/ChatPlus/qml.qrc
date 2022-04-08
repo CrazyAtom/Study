@@ -6,5 +6,7 @@
         <file>resources/qml/+Material/ChatToolbar.qml</file>
         <file>resources/qml/ConversationPage.qml</file>
         <file>resources/qml/ContactPage.qml</file>
+        <file>resources/qml/SingleView.qml</file>
+        <file>resources/qml/SplitView.qml</file>
     </qresource>
 </RCC>

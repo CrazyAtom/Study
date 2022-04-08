@@ -5,7 +5,15 @@ import QtQuick.Controls
 import com.crazyatom.chatplus
 
 Page {
-    id: root
+    id: conversationPage
+
+    Component.onCompleted: {
+        console.log("conversationPage - created")
+    }
+
+    Component.onDestruction: {
+        console.log("conversationPage - destroyed")
+    }
 
     property string inConversationId
 
@@ -21,7 +29,8 @@ Page {
             anchors.left: parent.left
             anchors.leftMargin: 10
             anchors.verticalCenter: parent.verticalCenter
-            onClicked: root.StackView.view.pop()
+            visible: !splitState
+            onClicked: conversationPage.StackView.view.pop()
         }
 
         Label {
