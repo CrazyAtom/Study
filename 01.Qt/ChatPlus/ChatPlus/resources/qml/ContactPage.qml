@@ -12,34 +12,35 @@ Page {
             anchors.right: parent.right
             anchors.rightMargin: 10
             anchors.verticalCenter: parent.verticalCenter
-//            onClicked:
+            onClicked: {
+                listView.model.add();
+            }
         }
     }
 
     ListView {
         id: listView
         anchors.fill: parent
-        spacing: 2
+        spacing: 5
+//        verticalLayoutDirection: ListView.BottomToTop
+        clip: true
         cacheBuffer: 2
-        model: SqlContactModel {}
+        model: SqlConversationsModel {}
         delegate: ItemDelegate {
-            property int indexOfThisDelegate: index
-
-            text: model.display
+            text: model.convid
             width: listView.width - listView.leftMargin - listView.rightMargin
             height: avatar.height
-            leftPadding: avatar.width + 32
-            onClicked: root.StackView.view.push("qrc:/resources/qml/ConversationPage.qml", { inConversationWith: modelData, recipientAvatar: avatar.source })
+            leftPadding: avatar.width + 10
+            onClicked: root.StackView.view.push("qrc:/resources/qml/ConversationPage.qml", { inConversationId: model.convid })
 
             Image {
                 id: avatar
-
-                readonly property int index: parent.indexOfThisDelegate + 1
-
-                width: 40; height: 40
+                width: 55; height: 45
                 fillMode: Image.PreserveAspectFit
-                source: "qrc:/avatar/resources/images/avatar_" + index + ".svg"
+                source: "qrc:/resources/images/chat.svg"
             }
         }
+
+        ScrollBar.vertical: ScrollBar {}
     }
 }

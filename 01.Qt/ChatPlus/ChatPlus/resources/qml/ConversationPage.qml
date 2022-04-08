@@ -7,8 +7,13 @@ import com.crazyatom.chatplus
 Page {
     id: root
 
-    property string inConversationWith
-    property string recipientAvatar
+    property string inConversationId
+
+    function getAvatar(min, max) {
+        min = Math.ceil(min); max = Math.floor(max);
+        var idx = Math.floor(Math.random() * (max - min)) + min;
+        return "avatar_" + idx;
+    }
 
     header: ChatToolbar {
         ToolButton {
@@ -21,8 +26,8 @@ Page {
 
         Label {
             id: pageTitle
-            text: inConversationWith
-            font.pixelSize: 20
+            text: inConversationId
+            font.pointSize: 15
             anchors.centerIn: parent
         }
     }
@@ -35,16 +40,27 @@ Page {
             id: listView
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.margins: pane.leftPadding + messageField.leftPadding
+            Layout.leftMargin: pane.leftPadding + messageField.leftPadding
+            Layout.rightMargin: pane.rightPadding + messageField.rightPadding
             displayMarginBeginning: 40
             displayMarginEnd: 40
-            spacing: 12
+            spacing: 5
+            clip: true
             cacheBuffer: 2
-            model: SqlConversationModel { recipient: inConversationWith }
+            model: SqlConversationModel { conversationid: inConversationId }
             delegate: Column {
-                readonly property bool sentByMe: model.recipient !== "Me"
+                readonly property bool sentByMe: model.author === "-"
 
                 anchors.right: sentByMe ? listView.contentItem.right : undefined
+
+                Label {
+                    id: authorText
+                    text: model.author
+                    color: "lightgrey"
+                    font.bold: true
+                    leftPadding: avatar.width + 10
+                    visible: !sentByMe
+                }
 
                 Row {
                     id: messageRow
@@ -55,12 +71,14 @@ Page {
                         width: 40; height: 40
                         anchors.bottom: messageBox.bottom
                         fillMode: Image.PreserveAspectFit
-                        source: !sentByMe ? recipientAvatar : ""
+                        source: !sentByMe ? "qrc:/avatar/resources/images/" + model.author + ".svg" : ""
                     }
 
                     Rectangle {
                         id: messageBox
-                        width: Math.min(messageText.implicitWidth + 24 + timestampText.implicitWidth, listView.width - (!sentByMe ? avatar.width + messageRow.spacing : 0))
+                        width: Math.min(messageText.implicitWidth + 24,
+//                                        listView.width - (!sentByMe ? avatar.width + messageRow.spacing : 0))
+                                        listView.width - (avatar.width + messageRow.spacing))
                         height: messageText.implicitHeight + 24
                         color: sentByMe ? "lightgrey" : "steelblue"
                         radius: 6
@@ -78,18 +96,19 @@ Page {
 
                 Label {
                     id: timestampText
-                    text: Qt.formatDateTime(model.timestamp, "d MMM hh:mm")
+                    text: Qt.formatDateTime(model.timestamp, "yy.MM.dd  AP h:mm")
                     color: "lightgrey"
-                    font { pointSize: 13; bold: true }
+                    font { pointSize: 10; bold: true }
                     anchors.right: parent.right
                 }
             }
 
-            ScrollBar.vertical: ScrollBar {}
+            ScrollBar.vertical: ScrollBar { clip: false }
         }
 
         Pane {
             id: pane
+            padding: 5
             Layout.fillWidth: true
 
             RowLayout {
@@ -100,6 +119,7 @@ Page {
                     Layout.fillWidth: true
                     placeholderText: qsTr("Compose message")
                     wrapMode: TextArea.Wrap
+                    font.pointSize: 15
                 }
 
                 Button {
@@ -107,7 +127,8 @@ Page {
                     text: qsTr("Send")
                     enabled: messageField.length > 0
                     onClicked: {
-                        listView.model.sendMessage(inConversationWith, messageField.text);
+                        listView.model.sendMessage(inConversationId, "-", messageField.text);
+                        listView.model.sendMessage(inConversationId, getAvatar(1, 11), messageField.text);
                         messageField.text = "";
                     }
                 }

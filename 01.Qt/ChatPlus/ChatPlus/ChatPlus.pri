@@ -8,11 +8,13 @@ message("You are running qmake on a generated .pro file. This may not work!")
 
 HEADERS += \
             ./models/sqlcontactmodel.h \
+            ./models/sqlconversationsmodel.h \
             ./models/sqlconversationmodel.h
 
 SOURCES += \
             ./main.cpp \
             ./models/sqlcontactmodel.cpp \
+            ./models/sqlconversationsmodel.cpp \
             ./models/sqlconversationmodel.cpp
 
 RESOURCES += \

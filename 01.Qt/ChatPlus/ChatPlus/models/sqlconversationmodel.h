@@ -8,7 +8,7 @@
 class SqlConversationModel : public QSqlTableModel
 {
     Q_OBJECT
-    Q_PROPERTY(QString recipient READ recipient WRITE setRecipient NOTIFY recipientChanged)
+    Q_PROPERTY(QString conversationid READ conversationid WRITE setConversationid NOTIFY conversationidChanged)
 
 public:
     explicit SqlConversationModel(QObject *parent = Q_NULLPTR);
@@ -19,16 +19,16 @@ public:
     virtual QHash<int, QByteArray> roleNames() const override;
 
 public:
-    QString recipient() const;
-    void setRecipient(const QString &recipient);
+    QString conversationid() const;
+    void setConversationid(const QString &conversationid="");
 
-    Q_INVOKABLE void sendMessage(const QString &recipient, const QString &message);
+    Q_INVOKABLE void sendMessage(const QString &conversationid, const QString &author, const QString &message);
 
 signals:
-    void recipientChanged();
+    void conversationidChanged();
 
 private:
-    QString m_recipient;
+    QString m_conversationid;
 };
 
 #endif // __SQLCONVERSATIONMODEL_H__

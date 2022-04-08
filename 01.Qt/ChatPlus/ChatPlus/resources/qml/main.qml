@@ -3,8 +3,8 @@ import QtQuick.Controls
 import QtQuick.Window
 
 ApplicationWindow {
-    width: 540
-    height: 900
+    width: 400
+    height: 700
     visible: true
     title: qsTr("Chat") + "+"
 
