@@ -22,6 +22,7 @@ public:
     QString conversationid() const;
     void setConversationid(const QString &conversationid="");
 
+public:
     Q_INVOKABLE void sendMessage(const QString &conversationid, const QString &author, const QString &message);
 
 signals:

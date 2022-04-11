@@ -36,6 +36,8 @@ static void connectToDatabase()
     if (!database.open()) {
         qFatal("Cannot open database: %s", qPrintable(database.lastError().text()));
         QFile::remove(fileName);
+    } else {
+        qDebug("open database: %s ", qPrintable(fileName));
     }
 }
 
@@ -48,7 +50,8 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
 //    qmlRegisterType<SqlContactModel>("com.crazyatom.chatplus", 1, 0, "SqlContactModel");
-    qmlRegisterType<SqlConversationsModel>("com.crazyatom.chatplus", 1, 0, "SqlConversationsModel");
+    qmlRegisterSingletonType<SqlConversationsModel>("com.crazyatom.chatplus", 1, 0, "SqlConversationsModel", &SqlConversationsModel::qmlInstance);
+//    qmlRegisterType<SqlConversationsModel>("com.crazyatom.chatplus", 1, 0, "SqlConversationsModel");
     qmlRegisterType<SqlConversationModel>("com.crazyatom.chatplus", 1, 0, "SqlConversationModel");
 
     connectToDatabase();

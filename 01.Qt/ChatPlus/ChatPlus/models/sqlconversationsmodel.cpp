@@ -29,11 +29,18 @@ static void createTable()
 SqlConversationsModel::SqlConversationsModel(QObject *parent)
     : QSqlTableModel(parent)
 {
+    qDebug("SqlConversationsModel::SqlConversationsModel()");
+
     createTable();
     setTable(contactsTableName);
 //    setSort(2, Qt::DescendingOrder);
     setEditStrategy(QSqlTableModel::OnManualSubmit);
     select();
+}
+
+SqlConversationsModel::~SqlConversationsModel()
+{
+    qDebug("SqlConversationsModel::~SqlConversationsModel()");
 }
 
 QVariant SqlConversationsModel::data(const QModelIndex &index, int role) const
@@ -52,6 +59,45 @@ QHash<int, QByteArray> SqlConversationsModel::roleNames() const
     names[Qt::UserRole + 1] = "lastmessage";
     names[Qt::UserRole + 2] = "lasttimestamp";
     return names;
+}
+
+QString SqlConversationsModel::lastmessage()
+{
+    const QSqlRecord sqlRecord = record(m_selectedRow);
+    if (!sqlRecord.isEmpty()) {
+        return sqlRecord.value("lastmessage").toString();
+    }
+    return QString();
+}
+
+void SqlConversationsModel::setLastmessage(const QString &message)
+{
+    setData(index(m_selectedRow, 1), message);
+    submitAll();
+    emit lastmessageChanged();
+}
+
+QString SqlConversationsModel::lasttimestamp()
+{
+    const QSqlRecord sqlRecord = record(m_selectedRow);
+    if (!sqlRecord.isEmpty()) {
+        return sqlRecord.value("lasttimestamp").toString();
+    }
+    return QString();
+}
+
+void SqlConversationsModel::setLasttimestamp(const QString &timestamp)
+{
+    setData(index(m_selectedRow, 2), timestamp);
+    submitAll();
+    emit lasttimestampChanged();
+}
+
+void SqlConversationsModel::selectedRow(const int &row)
+{
+    if (m_selectedRow != row) {
+        m_selectedRow = row;
+    }
 }
 
 void SqlConversationsModel::add(const QString &conversationid)

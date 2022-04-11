@@ -6,6 +6,8 @@
 #include <QSqlRecord>
 #include <QSqlQuery>
 
+#include "sqlconversationsmodel.h"
+
 static const char *conversationsTableName = "Conversations";
 
 static void createTable()
@@ -30,6 +32,8 @@ static void createTable()
 SqlConversationModel::SqlConversationModel(QObject *parent)
     : QSqlTableModel(parent)
 {
+    qDebug("SqlConversationModel::SqlConversationModel()");
+
     createTable();
     setTable(conversationsTableName);
 //    setSort(2, Qt::DescendingOrder);
@@ -92,6 +96,8 @@ void SqlConversationModel::sendMessage(const QString &conversationid, const QStr
         qWarning() << "Failed to send message:" << lastError().text();
         return;
     }
-
     submitAll();
+
+    SqlConversationsModel::instance()->setLastmessage(message);
+    SqlConversationsModel::instance()->setLasttimestamp(timestamp);
 }

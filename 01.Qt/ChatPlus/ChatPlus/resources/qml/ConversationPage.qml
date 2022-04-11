@@ -23,6 +23,10 @@ Page {
         return "avatar_" + idx;
     }
 
+    function isBlank(str) {
+        return (!str || /^\s*$/.test(str));
+    }
+
     header: ChatToolbar {
         ToolButton {
             text: qsTr("Back")
@@ -44,6 +48,7 @@ Page {
     ColumnLayout {
         anchors.fill: parent
         spacing: 0
+        visible: !isBlank(inConversationId);
 
         ListView {
             id: listView
@@ -134,7 +139,7 @@ Page {
                 Button {
                     id: sendButton
                     text: qsTr("Send")
-                    enabled: messageField.length > 0
+                    enabled: !isBlank(messageField.text);/*messageField.length > 0*/
                     onClicked: {
                         listView.model.sendMessage(inConversationId, "-", messageField.text);
                         listView.model.sendMessage(inConversationId, getAvatar(1, 11), messageField.text);

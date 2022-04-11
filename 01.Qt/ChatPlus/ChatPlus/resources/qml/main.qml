@@ -4,12 +4,12 @@ import QtQuick.Window
 
 ApplicationWindow {
     id: mainWindow
-    width: 400
-    height: 700
+    width: 400; height: 700
+    minimumWidth: 400; minimumHeight: 500
     visible: true
     title: qsTr("Chat") + "+"
 
-    readonly property int responsiveWidth: 500
+    readonly property int responsiveWidth: 600
     readonly property bool splitState: mainWindow.width > responsiveWidth
 
     Loader {

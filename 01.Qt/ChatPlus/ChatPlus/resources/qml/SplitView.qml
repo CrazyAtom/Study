@@ -17,7 +17,7 @@ Row {
 
     Connections {
         target: splitView
-        onConversationIdChange: {
+        function onConversationIdChange(convid) {
             rightPage.inConversationId = convid;
             console.log("onConversationIdChange: " + convid)
         }

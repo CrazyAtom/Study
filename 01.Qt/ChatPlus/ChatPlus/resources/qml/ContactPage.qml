@@ -33,13 +33,19 @@ Page {
 //        verticalLayoutDirection: ListView.BottomToTop
         clip: true
         cacheBuffer: 2
-        model: SqlConversationsModel {}
+
+        model: SqlConversationsModel
         delegate: ItemDelegate {
-            text: model.convid
-            width: listView.width - listView.leftMargin - listView.rightMargin
-            height: avatar.height
+            id: itemDelegate
+            width: listView.width - listView.leftMargin - listView.rightMargin; height: avatar.height
             leftPadding: avatar.width + 10
+            rightPadding: lastTimestamp.implicitWidth
+            bottomPadding: lastMessage.implicitHeight
+            highlighted: ListView.isCurrentItem
+            text: model.convid
             onClicked: {
+                listView.currentIndex = index
+                listView.model.selectedRow(index)
                 if (splitState) {
                     splitView.conversationIdChange(model.convid)
                 } else {
@@ -52,6 +58,24 @@ Page {
                 width: 55; height: 45
                 fillMode: Image.PreserveAspectFit
                 source: "qrc:/resources/images/chat.svg"
+            }
+
+            Label {
+                id: lastTimestamp
+                width: contentWidth; height: contentHeight
+                anchors.right: parent.right
+                text: Qt.formatDateTime(model.lasttimestamp, "yy.MM.dd")
+                color: "lightgray"
+                horizontalAlignment: Text.AlignRight
+            }
+
+            Label {
+                id: lastMessage
+                width: contentWidth; height: contentHeight
+                leftPadding: avatar.width + 10
+                anchors.bottom: parent.bottom
+                text: model.lastmessage
+                color: "lightgray"
             }
         }
 
