@@ -28,6 +28,8 @@ Page {
     }
 
     header: ChatToolbar {
+        height: 40
+
         ToolButton {
             text: qsTr("Back")
             anchors.left: parent.left
@@ -45,79 +47,115 @@ Page {
         }
     }
 
+    Page {
+        anchors.fill: parent
+        visible: isBlank(inConversationId);
+
+        Rectangle {
+            width: warningMessage.implicitWidth + 24; height: warningMessage.implicitHeight + 24
+            anchors.centerIn: parent
+            color: "lightgrey"
+            radius: 6
+
+            Label {
+                id: warningMessage
+                anchors.fill: parent
+                anchors.margins: 12
+                text: qsTr("Selected Conversation")
+                color: "black"
+            }
+        }
+    }
+
     ColumnLayout {
         anchors.fill: parent
         spacing: 0
         visible: !isBlank(inConversationId);
 
-        ListView {
-            id: listView
+        ScrollView {
+            id: scrollView
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.leftMargin: pane.leftPadding + messageField.leftPadding
-            Layout.rightMargin: pane.rightPadding + messageField.rightPadding
-            displayMarginBeginning: 40
-            displayMarginEnd: 40
-            spacing: 5
             clip: true
-            cacheBuffer: 2
-            model: SqlConversationModel { conversationid: inConversationId }
-            delegate: Column {
-                readonly property bool sentByMe: model.author === "-"
+            focus: true
+//            ScrollBar.vertical.interactive: true
+            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
-                anchors.right: sentByMe ? listView.contentItem.right : undefined
+            ListView {
+                id: listView
+                anchors.fill: parent
+                anchors.leftMargin: pane.leftPadding + messageField.leftPadding
+                anchors.rightMargin: pane.rightPadding + messageField.rightPadding
+                displayMarginBeginning: 40
+                displayMarginEnd: 40
+                spacing: 5
+                cacheBuffer: 2
+                model: SqlConversationModel { conversationid: inConversationId }
+                delegate: Column {
+                    readonly property bool sentByMe: model.author === "-"
 
-                Label {
-                    id: authorText
-                    text: model.author
-                    color: "lightgrey"
-                    font.bold: true
-                    leftPadding: avatar.width + 10
-                    visible: !sentByMe
-                }
+                    anchors.right: sentByMe ? listView.contentItem.right : undefined
 
-                Row {
-                    id: messageRow
-                    spacing: 6
-
-                    Image {
-                        id: avatar
-                        width: 40; height: 40
-                        anchors.bottom: messageBox.bottom
-                        fillMode: Image.PreserveAspectFit
-                        source: !sentByMe ? "qrc:/avatar/resources/images/" + model.author + ".svg" : ""
+                    Label {
+                        id: authorText
+                        text: model.author
+                        color: "lightgrey"
+                        font.bold: true
+                        leftPadding: avatar.width + 10
+                        visible: !sentByMe
                     }
 
-                    Rectangle {
-                        id: messageBox
-                        width: Math.min(messageText.implicitWidth + 24,
-//                                        listView.width - (!sentByMe ? avatar.width + messageRow.spacing : 0))
-                                        listView.width - (avatar.width + messageRow.spacing))
-                        height: messageText.implicitHeight + 24
-                        color: sentByMe ? "lightgrey" : "steelblue"
-                        radius: 6
+                    Row {
+                        id: messageRow
+                        spacing: 6
 
-                        Label {
-                            id: messageText
-                            text: model.message
-                            color: sentByMe ? "black" : "white"
-                            anchors.fill: parent
-                            anchors.margins: 12
-                            wrapMode: Label.Wrap
+                        Image {
+                            id: avatar
+                            width: 40; height: 40
+                            anchors.bottom: messageBox.bottom
+                            fillMode: Image.PreserveAspectFit
+                            source: !sentByMe ? "qrc:/avatar/resources/images/" + model.author + ".svg" : ""
+                        }
+
+                        Rectangle {
+                            id: messageBox
+                            width: Math.min(messageText.implicitWidth + 24,
+    //                                        listView.width - (!sentByMe ? avatar.width + messageRow.spacing : 0))
+                                            listView.width - (avatar.width + messageRow.spacing))
+                            height: messageText.implicitHeight + 24
+                            color: sentByMe ? "lightgrey" : "steelblue"
+                            radius: 6
+
+                            Label {
+                                id: messageText
+                                anchors.fill: parent
+                                anchors.margins: 12
+                                text: model.message
+                                color: sentByMe ? "black" : "white"
+                                wrapMode: Label.Wrap
+                            }
                         }
                     }
+
+                    Label {
+                        id: timestampText
+                        text: Qt.formatDateTime(model.timestamp, "yy.MM.dd  AP h:mm")
+                        color: "lightgrey"
+                        font { pointSize: 10; bold: true }
+                        anchors.right: parent.right
+                    }
                 }
 
-                Label {
-                    id: timestampText
-                    text: Qt.formatDateTime(model.timestamp, "yy.MM.dd  AP h:mm")
-                    color: "lightgrey"
-                    font { pointSize: 10; bold: true }
-                    anchors.right: parent.right
+                property bool scrollEnd: false
+//                    onAtYEndChanged: { console.log("onAtYEndChanged = ", atYEnd); scrollEnd = atYEnd }
+//                    onContentYChanged: { console.log("onContentYChanged = ", atYEnd); scrollEnd = !atYEnd }
+                onCountChanged: {
+                    /*if (scrollEnd) */positionViewAtEnd();
+                    listView.currentIndex = listView.count - 1
                 }
+
+//                ScrollBar.vertical: ScrollBar { }
             }
-
-            ScrollBar.vertical: ScrollBar { clip: false }
         }
 
         Pane {
