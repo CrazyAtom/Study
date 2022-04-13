@@ -1,12 +1,12 @@
 <RCC>
     <qresource prefix="/">
         <file>qtquickcontrols2.conf</file>
+        <file>resources/qml/ContactPage.qml</file>
+        <file>resources/qml/ConversationPage.qml</file>
+        <file>resources/qml/SingleView.qml</file>
+        <file>resources/qml/SplitView.qml</file>
         <file>resources/qml/main.qml</file>
         <file>resources/qml/ChatToolbar.qml</file>
         <file>resources/qml/+Material/ChatToolbar.qml</file>
-        <file>resources/qml/ConversationPage.qml</file>
-        <file>resources/qml/ContactPage.qml</file>
-        <file>resources/qml/SingleView.qml</file>
-        <file>resources/qml/SplitView.qml</file>
     </qresource>
 </RCC>
