@@ -1,6 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
+import com.crazyatom.chatplus
+
 Row {
     id: splitView
     anchors.fill: parent
@@ -31,5 +33,6 @@ Row {
     ConversationPage {
         id: rightPage;
         width: parent.width * 0.7; height: parent.height
+        inConversationId: SqlConversationsModel.getConvId()
     }
 }

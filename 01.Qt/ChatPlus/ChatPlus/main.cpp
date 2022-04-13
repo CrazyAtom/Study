@@ -5,7 +5,6 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 
-//#include "models/sqlcontactmodel.h"
 #include "models/sqlconversationsmodel.h"
 #include "models/sqlconversationmodel.h"
 
@@ -49,9 +48,7 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-//    qmlRegisterType<SqlContactModel>("com.crazyatom.chatplus", 1, 0, "SqlContactModel");
     qmlRegisterSingletonType<SqlConversationsModel>("com.crazyatom.chatplus", 1, 0, "SqlConversationsModel", &SqlConversationsModel::qmlInstance);
-//    qmlRegisterType<SqlConversationsModel>("com.crazyatom.chatplus", 1, 0, "SqlConversationsModel");
     qmlRegisterType<SqlConversationModel>("com.crazyatom.chatplus", 1, 0, "SqlConversationModel");
 
     connectToDatabase();

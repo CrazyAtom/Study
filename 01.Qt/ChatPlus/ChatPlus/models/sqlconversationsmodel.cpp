@@ -61,6 +61,19 @@ QHash<int, QByteArray> SqlConversationsModel::roleNames() const
     return names;
 }
 
+int SqlConversationsModel::selectedRow()
+{
+    return m_selectedRow;
+}
+
+void SqlConversationsModel::setSelectedRow(const int &row)
+{
+    if (m_selectedRow != row) {
+        m_selectedRow = row;
+        emit selectedRowChanged();
+    }
+}
+
 QString SqlConversationsModel::lastmessage()
 {
     const QSqlRecord sqlRecord = record(m_selectedRow);
@@ -73,8 +86,9 @@ QString SqlConversationsModel::lastmessage()
 void SqlConversationsModel::setLastmessage(const QString &message)
 {
     setData(index(m_selectedRow, 1), message);
-    submitAll();
-    emit lastmessageChanged();
+    if (submitAll()) {
+        emit lastmessageChanged();
+    }
 }
 
 QString SqlConversationsModel::lasttimestamp()
@@ -89,14 +103,8 @@ QString SqlConversationsModel::lasttimestamp()
 void SqlConversationsModel::setLasttimestamp(const QString &timestamp)
 {
     setData(index(m_selectedRow, 2), timestamp);
-    submitAll();
-    emit lasttimestampChanged();
-}
-
-void SqlConversationsModel::selectedRow(const int &row)
-{
-    if (m_selectedRow != row) {
-        m_selectedRow = row;
+    if (submitAll()) {
+        emit lasttimestampChanged();
     }
 }
 
@@ -115,4 +123,13 @@ void SqlConversationsModel::add(const QString &conversationid)
     }
 
     submitAll();
+}
+
+QString SqlConversationsModel::getConvId() const
+{
+    const QSqlRecord sqlRecord = record(m_selectedRow);
+    if (!sqlRecord.isEmpty()) {
+        return sqlRecord.value("convid").toString();
+    }
+    return QString();
 }

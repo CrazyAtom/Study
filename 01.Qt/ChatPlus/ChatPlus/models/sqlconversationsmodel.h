@@ -9,6 +9,7 @@
 class SqlConversationsModel : public QSqlTableModel
 {
     Q_OBJECT
+    Q_PROPERTY(int selectedRow READ selectedRow WRITE setSelectedRow NOTIFY selectedRowChanged)
     Q_PROPERTY(QString lastmessage READ lastmessage WRITE setLastmessage NOTIFY lastmessageChanged)
     Q_PROPERTY(QString lasttimestamp READ lasttimestamp WRITE setLasttimestamp NOTIFY lasttimestampChanged)
 
@@ -34,6 +35,9 @@ public:
     virtual QHash<int, QByteArray> roleNames() const override;
 
 public:
+    int selectedRow();
+    void setSelectedRow(const int &row);
+
     QString lastmessage();
     void setLastmessage(const QString &message);
 
@@ -41,10 +45,11 @@ public:
     void setLasttimestamp(const QString &timestamp);
 
 public:
-    Q_INVOKABLE void selectedRow(const int &row);
     Q_INVOKABLE void add(const QString &conversationid="");
+    Q_INVOKABLE QString getConvId() const;
 
 signals:
+    void selectedRowChanged();
     void lastmessageChanged();
     void lasttimestampChanged();
 

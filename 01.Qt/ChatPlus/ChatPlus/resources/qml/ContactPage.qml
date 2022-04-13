@@ -8,6 +8,7 @@ Page {
 
     Component.onCompleted: {
         console.log("contactPage - created")
+        listView.currentIndex = SqlConversationsModel.selectedRow
     }
 
     Component.onDestruction: {
@@ -15,28 +16,27 @@ Page {
     }
 
     header: ChatToolbar {
+        height: 40
+
         ToolButton {
             text: qsTr("New")
             anchors.right: parent.right
             anchors.rightMargin: 10
             anchors.verticalCenter: parent.verticalCenter
-            onClicked: {
-                listView.model.add();
-            }
+            onClicked: listView.model.add()
         }
     }
 
     ListView {
         id: listView
         anchors.fill: parent
-        spacing: 5
+//        spacing: 5
 //        verticalLayoutDirection: ListView.BottomToTop
         clip: true
         cacheBuffer: 2
 
         model: SqlConversationsModel
         delegate: ItemDelegate {
-            id: itemDelegate
             width: listView.width - listView.leftMargin - listView.rightMargin; height: avatar.height
             leftPadding: avatar.width + 10
             rightPadding: lastTimestamp.implicitWidth
@@ -44,8 +44,7 @@ Page {
             highlighted: ListView.isCurrentItem
             text: model.convid
             onClicked: {
-                listView.currentIndex = index
-                listView.model.selectedRow(index)
+                listView.currentIndex = listView.model.selectedRow = index
                 if (splitState) {
                     splitView.conversationIdChange(model.convid)
                 } else {
