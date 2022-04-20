@@ -1,4 +1,4 @@
-QT += core qml quick sql
+QT += quick sql
 
 HEADERS += \
             ./models/sqlconversationsmodel.h \
