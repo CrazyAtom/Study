@@ -1,17 +1,17 @@
 <RCC>
     <qresource prefix="/avatar">
-        <file>resources/images/avatar_4.svg</file>
-        <file>resources/images/avatar_5.svg</file>
-        <file>resources/images/avatar_6.svg</file>
-        <file>resources/images/avatar_7.svg</file>
-        <file>resources/images/avatar_8.svg</file>
-        <file>resources/images/avatar_9.svg</file>
-        <file>resources/images/avatar_10.svg</file>
-        <file>resources/images/avatar_1.svg</file>
-        <file>resources/images/avatar_2.svg</file>
-        <file>resources/images/avatar_3.svg</file>
+        <file alias="avatar_1.svg">resources/images/avatar_1.svg</file>
+        <file alias="avatar_2.svg">resources/images/avatar_2.svg</file>
+        <file alias="avatar_3.svg">resources/images/avatar_3.svg</file>
+        <file alias="avatar_4.svg">resources/images/avatar_4.svg</file>
+        <file alias="avatar_5.svg">resources/images/avatar_5.svg</file>
+        <file alias="avatar_6.svg">resources/images/avatar_6.svg</file>
+        <file alias="avatar_7.svg">resources/images/avatar_7.svg</file>
+        <file alias="avatar_8.svg">resources/images/avatar_8.svg</file>
+        <file alias="avatar_9.svg">resources/images/avatar_9.svg</file>
+        <file alias="avatar_10.svg">resources/images/avatar_10.svg</file>
     </qresource>
     <qresource prefix="/">
-        <file>resources/images/chat.svg</file>
+        <file alias="thumb_chat.svg">resources/images/chat.svg</file>
     </qresource>
 </RCC>

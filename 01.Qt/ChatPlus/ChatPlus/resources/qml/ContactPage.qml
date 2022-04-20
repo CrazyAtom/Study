@@ -48,7 +48,7 @@ Page {
                 if (splitState) {
                     splitView.conversationIdChange(model.convid)
                 } else {
-                    contactPage.StackView.view.push("qrc:/resources/qml/ConversationPage.qml", { inConversationId: model.convid })
+                    contactPage.StackView.view.push("qrc:/qml/ConversationPage.qml", { inConversationId: model.convid })
                 }
             }
 
@@ -56,7 +56,7 @@ Page {
                 id: avatar
                 width: 55; height: 45
                 fillMode: Image.PreserveAspectFit
-                source: "qrc:/resources/images/chat.svg"
+                source: "qrc:/thumb_chat.svg"
             }
 
             Label {

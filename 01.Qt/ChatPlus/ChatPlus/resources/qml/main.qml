@@ -15,12 +15,12 @@ ApplicationWindow {
     Loader {
         id: pageLoader
         anchors.fill: parent
-        source: "qrc:/resources/qml/SingleView.qml"
+        source: "qrc:/qml/SingleView.qml"
 
         states: [
             State {
                 when: splitState
-                PropertyChanges { target: pageLoader; source: "qrc:/resources/qml/SplitView.qml" }
+                PropertyChanges { target: pageLoader; source: "qrc:/qml/SplitView.qml" }
             }
         ]
     }

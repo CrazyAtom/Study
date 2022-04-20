@@ -114,7 +114,7 @@ Page {
                             width: 40; height: 40
                             anchors.bottom: messageBox.bottom
                             fillMode: Image.PreserveAspectFit
-                            source: !sentByMe ? "qrc:/avatar/resources/images/" + model.author + ".svg" : ""
+                            source: !sentByMe ? "qrc:/avatar/" + model.author + ".svg" : ""
                         }
 
                         Rectangle {

@@ -1,13 +1,11 @@
 QT += core qml quick sql
 
 HEADERS += \
-            ./models/sqlcontactmodel.h \
             ./models/sqlconversationsmodel.h \
             ./models/sqlconversationmodel.h \
 
 SOURCES += \
             ./main.cpp \
-            ./models/sqlcontactmodel.cpp \
             ./models/sqlconversationsmodel.cpp \
             ./models/sqlconversationmodel.cpp \
 
@@ -30,3 +28,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 #DISTFILES += \
+
+#if defined(Q_OS_WIN)
+RC_ICONS = ./resources/images/chatplus.ico
+#endif

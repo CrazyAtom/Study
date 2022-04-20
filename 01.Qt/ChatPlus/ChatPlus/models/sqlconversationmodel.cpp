@@ -36,8 +36,8 @@ SqlConversationModel::SqlConversationModel(QObject *parent)
 
     createTable();
     setTable(conversationsTableName);
-//    setSort(2, Qt::DescendingOrder);
     setEditStrategy(QSqlTableModel::OnManualSubmit);
+    select();
 }
 
 QVariant SqlConversationModel::data(const QModelIndex &index, int role) const
