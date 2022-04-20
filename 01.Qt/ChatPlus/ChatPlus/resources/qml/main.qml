@@ -4,7 +4,7 @@ import QtQuick.Window
 
 ApplicationWindow {
     id: mainWindow
-    width: 400; height: 700
+    width: 450; height: 700
     minimumWidth: 400; minimumHeight: 500
     visible: true
     title: qsTr("Chat") + "+"
